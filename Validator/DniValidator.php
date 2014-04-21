@@ -63,6 +63,21 @@ class DniValidator extends ConstraintValidator
         }
     }
 
+    protected function checkStandardNie($nie)
+    {
+        if (preg_match('/^[XYZ]{1}/', $nie))
+        {
+            if ($this->splitDni($nie)[8] == substr('TRWAGMYFPDXBNJZSQVHLCKE', substr(str_replace(array('X','Y','Z'), array('0','1','2'), $nie), 0, 8) % 23, 1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     /**
      * @param $dni
      * @return boolean
@@ -77,7 +92,7 @@ class DniValidator extends ConstraintValidator
         }
 
         // Standard Dnis
-        if ($this->checkStandardDni($dni) || $this->checkSpecialDni($dni)) {
+        if ($this->checkStandardDni($dni) || $this->checkSpecialDni($dni) || $this->checkStandardNie($dni)) {
             return true;
         }
 
