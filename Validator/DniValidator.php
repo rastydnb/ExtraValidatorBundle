@@ -67,7 +67,8 @@ class DniValidator extends ConstraintValidator
     {
         if (preg_match('/^[XYZ]{1}/', $nie))
         {
-           if($this->splitDni($nie)[8] == substr('TRWAGMYFPDXBNJZSQVHLCKE', substr(str_replace(array('X','Y','Z'), array('0','1','2'), $nie), 0, 8) % 23, 1))
+            $split =$this->splitDni($nie)[8];
+           if( $split == substr('TRWAGMYFPDXBNJZSQVHLCKE', substr(str_replace(array('X','Y','Z'), array('0','1','2'), $nie), 0, 8) % 23, 1))
             {
                 return true;
             }
